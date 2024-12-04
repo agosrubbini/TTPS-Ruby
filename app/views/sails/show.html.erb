@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @sail %>
+
+<div>
+  <%= link_to "Edit this sail", edit_sail_path(@sail) %> |
+  <%= link_to "Back to sails", sails_path %>
+
+  <%= button_to "Destroy this sail", @sail, method: :delete %>
+</div>

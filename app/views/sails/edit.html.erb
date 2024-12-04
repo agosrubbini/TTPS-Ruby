@@ -1,0 +1,12 @@
+<% content_for :title, "Editing sail" %>
+
+<h1>Editing sail</h1>
+
+<%= render "form", sail: @sail %>
+
+<br>
+
+<div>
+  <%= link_to "Show this sail", @sail %> |
+  <%= link_to "Back to sails", sails_path %>
+</div>

@@ -1,0 +1,37 @@
+<%= form_with(model: sail) do |form| %>
+  <% if sail.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(sail.errors.count, "error") %> prohibited this sail from being saved:</h2>
+
+      <ul>
+        <% sail.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :completed_at, style: "display: block" %>
+    <%= form.datetime_field :completed_at %>
+  </div>
+
+  <div>
+    <%= form.label :total_amount, style: "display: block" %>
+    <%= form.text_field :total_amount %>
+  </div>
+
+  <div>
+    <%= form.label :employee_id, style: "display: block" %>
+    <%= form.text_field :employee_id %>
+  </div>
+
+  <div>
+    <%= form.label :client_dni, style: "display: block" %>
+    <%= form.number_field :client_dni %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
