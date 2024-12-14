@@ -4,12 +4,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   rolify
-  has_many :sails, foreign_key: 'employee_id'
+  has_many :sails, foreign_key: "employee_id"
 
   # Validación para roles
-  #validates_inclusion_of :role, in: ['employee', 'admin', 'manager']
+  # validates_inclusion_of :role, in: ['employee', 'admin', 'manager']
 
-  #validates :name, presence: true, uniqueness: true
+  # validates :name, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
 
   validates :password, presence: true, length: { minimum: 6 }, confirmation: true, unless: -> { skip_password_validation }
@@ -29,11 +29,11 @@ class User < ApplicationRecord
     active == true
   end
 
- 
+
   # def recover
   #   update(encrypted_password: BCrypt::Password.create('123456'))
   # end
-  # 
+  #
   def soft_delete
     update_attribute(:active, false)
   end
@@ -60,8 +60,4 @@ class User < ApplicationRecord
     self.skip_password_validation = true
     self.save # Guardamos el usuario con la nueva contraseña
   end
-
-  
-  
-  
 end

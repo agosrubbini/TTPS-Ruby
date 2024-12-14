@@ -7,54 +7,123 @@ Category.find_or_create_by(name: 'Buzos')
 Category.find_or_create_by(name: 'Pantalones')
 
 # Encriptar la contraseña manualmente usando BCrypt
-password = BCrypt::Password.create('123456')
+# password = BCrypt::Password.create('123456')
 
 # Crear el usuario con la contraseña encriptada
 user = User.find_or_create_by(email: 'admin@gmail.com') do |u|
   u.name = 'admin'
   u.phone = '2213456789'
-  u.encrypted_password = password  # Guardar la contraseña encriptada
+  u.password  = '123456'
   u.active = true
 end
 # Asignar rol de admin al usuario
 user.add_role(:admin)
 
+user = User.find_or_create_by(email: 'emple@gmail.com') do |u|
+  u.name = 'emple'
+  u.phone = '2213456789'
+  u.password  = '123456'
+  u.active = true
+end
+# Asignar rol de admin al usuario
+user.add_role(:employee)
 
+images_path = Rails.root.join('app', 'assets', 'images')
 
-Product.find_or_create_by(name: 'Básica', color: 'Blanco') do |p|
-  p.description = 'Remera de algodón de alta calidad'
-  p.price = 20000
-  p.stock = 100
-  p.size = 'M'
-  p.entry_date = Date.today
-  p.category_id = Category.find_by(name: 'Remeras').id  # Referencia a la categoría 'Remeras'
+def attach_image(product, images_path)
+  folder_name = "#{product.name}_#{product.color}"
+  folder_path = images_path.join(folder_name)
+
+  # Verificar si la carpeta existe y contiene imágenes
+  if Dir.exist?(folder_path)
+    image_file = Dir.children(folder_path).first # Asume una imagen por carpeta
+    if image_file
+      file_path = folder_path.join(image_file)
+      product.images.attach(
+        io: File.open(file_path),
+        filename: image_file,
+        content_type: `file --brief --mime-type #{file_path}`.strip
+      )
+    end
+  else
+    puts "No se encontró la carpeta para #{folder_name}"
+  end
 end
 
-Product.find_or_create_by(name: 'Over', color: 'Marron') do |p|
-  p.description = 'Buzo oversize con capucha y bolsillo frontal'
-  p.price = 50000
-  p.stock = 50
-  p.size = 'L'
-  p.entry_date = Date.today
-  p.category_id = Category.find_by(name: 'Buzos').id  # Referencia a la categoría 'Buzos'
+products = [
+  { name: 'Basica', color: 'Blanco', description: 'Remera de algodón de alta calidad', price: 20000, stock: 100, size: 'M', category: 'Remeras' },
+  { name: 'Over', color: 'Marron', description: 'Buzo oversize con capucha y bolsillo frontal', price: 50000, stock: 50, size: 'L', category: 'Buzos' },
+  { name: 'Basica', color: 'Marron', description: 'Remera de algodón de alta calidad', price: 20000, stock: 100, size: 'L', category: 'Remeras' },
+  { name: 'Over', color: 'Negro', description: 'Buzo oversize con capucha y bolsillo frontal', price: 50000, stock: 50, size: 'S', category: 'Buzos' }
+]
+
+products.each do |attrs|
+  product = Product.find_or_create_by(name: attrs[:name], color: attrs[:color]) do |p|
+    p.description = attrs[:description]
+    p.price = attrs[:price]
+    p.stock = attrs[:stock]
+    p.size = attrs[:size]
+    p.entry_date = Date.today
+    p.category_id = Category.find_by(name: attrs[:category]).id
+  end
+  attach_image(product, images_path)
 end
 
-Product.find_or_create_by(name: 'Básica', color: 'Marron') do |p|
-  p.description = 'Remera de algodón de alta calidad'
-  p.price = 20000
-  p.stock = 100
-  p.size = 'L'
-  p.entry_date = Date.today
-  p.category_id = Category.find_by(name: 'Remeras').id  # Referencia a la categoría 'Remeras'
+require 'securerandom'
+
+5.times do |i|
+  # Crear una venta con los atributos iniciales
+  sail = Sail.create!(
+    completed_at: DateTime.current,
+    total_amount: 0, # Se calculará luego
+    user_id: 2,
+    client_dni: '22222222'
+  )
+
+  # Seleccionar entre 2 y 4 productos al azar
+  selected_products = Product.order('RANDOM()').limit(rand(2..4))
+  products_sails_data = []
+
+  selected_products.each do |product|
+    # Generar una cantidad aleatoria de productos vendidos, pero asegurarse de que no supere el stock
+    max_amount = [ product.stock, 30 ].min
+    next if max_amount < 5 # Ignorar productos con stock insuficiente para la venta mínima
+
+    amount_sold = rand(5..max_amount)
+
+    # Verificar si el producto ya está asociado a esta venta
+    existing_entry = products_sails_data.find { |entry| entry[:product_id] == product.id }
+
+    if existing_entry
+      # Sumar la cantidad vendida al registro existente
+      new_amount = existing_entry[:amount_sold] + amount_sold
+      if new_amount <= product.stock
+        existing_entry[:amount_sold] = new_amount
+        existing_entry[:total_amount] = new_amount * product.price
+      end
+    else
+      # Crear un nuevo registro en la tabla intermedia
+      products_sails_data << {
+        product_id: product.id,
+        sail_id: sail.id,
+        amount_sold: amount_sold,
+        total_amount: amount_sold * product.price
+      }
+    end
+  end
+
+  # Crear los registros en ProductsSails
+  ProductsSail.insert_all(products_sails_data)
+
+  # Calcular el total_amount de la venta y actualizarla
+  sail_total_amount = products_sails_data.sum { |entry| entry[:total_amount] }
+  sail.update!(total_amount: sail_total_amount)
+
+  # Reducir el stock de los productos vendidos
+  products_sails_data.each do |entry|
+    product = Product.find(entry[:product_id])
+    product.update!(stock: product.stock - entry[:amount_sold])
+  end
+
+  puts "Venta #{i + 1} creada con ID #{sail.id} y total de $#{sail.total_amount}"
 end
-
-Product.find_or_create_by(name: 'Over', color: 'Negro') do |p|
-  p.description = 'Buzo oversize con capucha y bolsillo frontal'
-  p.price = 50000
-  p.stock = 50
-  p.size = 'S'
-  p.entry_date = Date.today
-  p.category_id = Category.find_by(name: 'Buzos').id  # Referencia a la categoría 'Buzos'
-end
-
-
