@@ -1,24 +1,67 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Proyecto TTPS - Ruby
 
-Things you may want to cover:
+## Requerimientos
 
-* Ruby version
+- Ruby 3.3.6
+- Rails 8.0.0
+- Database: SQLite3
 
-* System dependencies
+## Instalación del proyecto
 
-* Configuration
+### Clonar el repo
 
-* Database creation
+```bash
+$ git clone https://github.com/joaquinsantacruz/Avivas.git
+```
 
-* Database initialization
+### Instalar dependencias
 
-* How to run the test suite
+```bash
+$ bundle install
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+### Preparar la base de datos
 
-* Deployment instructions
+```bash
+$ rails db:reset
+```
 
-* ...
+## Ejecución de la aplicación
+
+```bash
+$ rails server
+```
+
+
+# Decisiones de diseño:
+
+## Gemas:
+- Rolify para manejar los tres roles (admin, manager, employee)
+- CanCanCan para manejar las autorizaciones que tiene cada rol
+- Devise para implementar el inicio y cierre de session
+- ActiveStorage para el almacenamiento de las imagenes de los productos
+
+## Tablas:
+
+- products: para modelar los productos. Los atributos color, size son de tipo string, y tiene una relacion con la tabla categories a traves del atributo category_id, el cual solo toma un valor, por lo tanto un producto puede tener una unica categoria
+
+- sails: para modelar las ventas. Se relaciona con el usuario que creo la venta a traves de user_id. El campo client_dni hace referencia al DNI del cliente que se registra en la compra. El atributo is_deleted es booleano y sirve para cancelar la compra, lo que devuelve el stock al producto.
+
+- products_sails: es la tabla intermedia que conecta la relacion muchos a muchos entre products y sails, se relaciona con ambas tablas a traves de product_id y sail_id. El campo amount_sold es la cantidad vendida del producto y total_amount el precio total del producto para la cantidad determinada.
+
+- categories: representa las categorias a las que pueden pertenecer los productos. Su contenido esta cargado previamente en la base de datos. 
+
+# Seeds
+Se pre-cargaron datos para que sea facil el uso de la aplicacion.
+
+Usuario administrador:
+
+- Email: `admin@mail.com`
+- Contraseña: `123456`
+
+Usuario Empleado:
+
+- Emails: `emple@mail.com`
+- Contraseña: `123456`
