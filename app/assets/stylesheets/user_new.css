@@ -1,0 +1,114 @@
+/* Estilo general para el formulario */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Contenedor de los grupos de formulario */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  /* Estilos para las etiquetas de los campos */
+  .form-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* Estilos para los campos de entrada */
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Estilo para el campo de select */
+  .form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: white;
+    padding-right: 25px;
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3E%3Cpath fill="none" stroke="gray" d="M1 4l7 7 7-7"%3E%3C/path%3E%3C/svg%3E');
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    background-size: 12px;
+  }
+  
+  /* Estilos para el botón de submit */
+  .btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilo para el botón de cancelar */
+  .btn-secondary {
+    background-color: #6c757d;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a636b;
+  }
+  
+  /* Estilos para los mensajes de error */
+  .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #f5c6cb;
+  }
+
+  /* Estilos solo para los botones dentro del formulario */
+.user-form .btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .user-form .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .user-form .btn-secondary {
+    background-color: #6c757d;
+  }
+  
+  .user-form .btn-secondary:hover {
+    background-color: #5a636b;
+  }
+
+  /* Estilos solo para los botones del navbar */
+.navbar .btn {
+    background-color: transparent;
+    color: #000;
+    border: none;
+  }
+  
+  .navbar .btn:hover {
+    background-color: #f8f9fa;
+  }
+  
+  
+  

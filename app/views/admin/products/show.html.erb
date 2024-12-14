@@ -2,9 +2,9 @@
 
 <%= render @product %>
 
-<div>
-  <%= link_to "Editar", edit_admin_product_path(@product) %> |
-  <%= link_to "Volver al listado", admin_products_path %>
+<div class="product-actions">
+  <%= link_to "Editar", edit_admin_product_path(@product), class: "action-link edit-link" %> 
+  <%= link_to "Volver al listado", admin_products_path, class: "action-link back-link" %>
 
-  <%= button_to "Eliminar", admin_product_path(@product), method: :delete %>
+  <%= button_to "Eliminar", admin_product_path(@product), method: :delete, class: "action-button delete-button" %>
 </div>

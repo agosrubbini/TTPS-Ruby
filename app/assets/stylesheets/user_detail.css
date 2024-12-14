@@ -1,0 +1,115 @@
+/* Estilos generales para la página de detalles del usuario */
+.user-detail-title {
+    font-size: 28px;
+    text-align: center;
+    color: #3e3e3e;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+/* Contenedor de detalles del usuario */
+.user-detail-container {
+    background-color: #fafafa;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    max-width: 950px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Estilo para cada detalle del usuario */
+.user-detail {
+    font-size: 18px;
+    color: #5c5c5c;
+    margin-bottom: 20px;
+}
+
+.detail-label {
+    font-weight: bold;
+    color: #4a4a4a;
+    margin-right: 10px;
+}
+
+/* Estilo para enlaces de acción (editar y volver) */
+.user-action-links {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.btn {
+    padding: 12px 25px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.edit-btn {
+    background-color: #4caf50;
+    color: white;
+    border: 2px solid #4caf50;
+}
+
+.edit-btn:hover {
+    background-color: #45a049;
+    border-color: #45a049;
+}
+
+.back-btn {
+    background-color: #f44336;
+    color: white;
+    border: 2px solid #f44336;
+}
+
+.back-btn:hover {
+    background-color: #e53935;
+    border-color: #e53935;
+}
+
+/* Estilos para pantallas pequeñas (Responsive) */
+@media (max-width: 768px) {
+    .user-detail-container {
+        padding: 20px;
+        margin: 0 15px;
+    }
+
+    .user-detail {
+        font-size: 16px;
+    }
+
+    .user-action-links {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+        padding: 14px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-detail-title {
+        font-size: 24px;
+    }
+
+    .user-detail {
+        font-size: 14px;
+    }
+
+    .btn {
+        padding: 12px 18px;
+        font-size: 14px;
+    }
+}

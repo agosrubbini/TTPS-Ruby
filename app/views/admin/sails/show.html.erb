@@ -1,10 +1,9 @@
 <%= render 'layouts/navbar' %>
-<p style="color: green"><%= notice %></p>
+<p class="notice-message"><%= notice %></p>
 
-<%= render @sail %>
+<div class="show-product-container">
+  <%= render @sail %>
 
-<div>
-  <%= link_to "Volver al listado", admin_sails_path %>
-
-  <%# <%= button_to "Cancelar", @sail, method: :delete %> 
-</div>
+  <div class="back-links">
+    <%= link_to "Volver al listado", admin_sails_path, class: "btn back-btn" %>
+  </div>

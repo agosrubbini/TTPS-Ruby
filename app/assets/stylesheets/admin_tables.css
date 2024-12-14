@@ -1,0 +1,128 @@
+/* Estilo general para las tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    background-color: #fdfcfb; /* Fondo suave */
+    border: 1px solid #d1cfcf; /* Bordes suaves */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    border-radius: 8px; /* Bordes redondeados */
+    overflow: hidden;
+  }
+  
+  /* Encabezado de la tabla */
+  table thead th {
+    background-color: #b7a99a; /* Marrón claro */
+    color: #fff; /* Texto blanco */
+    text-align: left;
+    padding: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 1px solid #d1cfcf;
+  }
+  
+  /* Filas de la tabla */
+  table tbody tr {
+    border-bottom: 1px solid #eaeaea;
+    transition: background-color 0.3s ease;
+  }
+  
+  table tbody tr:nth-child(even) {
+    background-color: #f7f5f4; /* Alternar con un tono más claro */
+  }
+  
+  table tbody tr:hover {
+    background-color: #eee4dd; /* Resaltar con un tono marrón claro */
+  }
+  
+  /* Celdas de la tabla */
+  table th, table td {
+    padding: 14px;
+    text-align: left;
+    border: 1px solid #d1cfcf;
+    color: #4d4d4d; /* Texto oscuro */
+  }
+  
+  /* Columna de acciones específica */
+  table td.actions {
+    font-weight: bold;
+    color: #5e4636; /* Marrón oscuro */
+  }
+  
+  /* Botones en la columna Acciones */
+  table tbody td .btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 2px;
+    cursor: pointer;
+    color: white; /* Contraste en botones */
+  }
+  
+  /* Botones personalizados */
+  table tbody td .btn {
+    background-color: #a67c68; /* Marrón nude */
+  }
+  
+  table tbody td .btn:hover {
+    background-color: #8b6856; /* Oscurecer un poco al pasar el mouse */
+  }
+  
+  table tbody td .btn-success {
+    background-color: #81a067; /* Verde suave */
+  }
+  
+  table tbody td .btn-success:hover {
+    background-color: #6f8d56;
+  }
+  
+  table tbody td .btn-danger {
+    background-color: #c76756; /* Rojo nude */
+  }
+  
+  table tbody td .btn-danger:hover {
+    background-color: #a75445;
+  }
+  
+  /* Encabezado y botones de nuevo producto */
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .table-header h1 {
+    color: #5e4636; /* Marrón oscuro */
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .table-header .new-admin-btn {
+    background-color: #a67c68; /* Marrón nude */
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    text-transform: uppercase;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  .table-header .new-admin-btn:hover {
+    background-color: #8b6856;
+  }
+  
+  /* Para ajustar el scroll si la tabla es muy ancha */
+  .table-container {
+    overflow-x: auto;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #faf8f7; /* Fondo suave */
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  

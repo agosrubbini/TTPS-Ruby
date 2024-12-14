@@ -1,0 +1,140 @@
+/* Estilo para el contenedor principal del detalle de producto */
+.product-detail {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fdfcfb; /* Fondo suave */
+    border: 1px solid #d1cfcf; /* Bordes suaves */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    font-family: 'Arial', sans-serif;
+    color: #4d4d4d; /* Texto oscuro */
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos estén en columna */
+    align-items: center; /* Centra los elementos dentro del contenedor */
+}
+
+/* Estilo para los encabezados de cada propiedad */
+.product-detail p strong {
+    color: #5e4636; /* Marrón oscuro */
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Espaciado entre las filas de detalle */
+.product-detail p {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+/* Estilo para las imágenes */
+.product-detail .product-image {
+    display: block;
+    margin: 10px auto;
+    border-radius: 10px;
+    border: 1px solid #d1cfcf;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    height: auto;
+}
+
+/* Estilo para la fecha de eliminación si es activa */
+.product-detail .product-deletion-date {
+    color: #4CAF50; /* Verde para los productos activos */
+}
+
+/* Estilo para la categoría y fecha de ingreso */
+.product-detail .product-category,
+.product-detail .product-entry-date {
+    font-style: italic;
+    color: #5e4636; /* Marrón oscuro */
+}
+
+/* Estilo para el contenedor de las acciones */
+.product-actions {
+    margin-top: 20px;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center; /* Centra las acciones horizontalmente */
+    flex-wrap: wrap; /* Permite que los enlaces se ajusten en diferentes líneas si es necesario */
+    gap: 10px; /* Espacio entre los botones */
+}
+
+/* Estilo común para todos los enlaces de acción */
+.product-actions .action-link {
+    color: #5e4636; /* Marrón oscuro */
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Estilo cuando el mouse pasa sobre los enlaces de acción */
+.product-actions .action-link:hover {
+    background-color: #d1cfcf; /* Fondo gris claro */
+    color: #ffffff; /* Texto blanco al pasar el mouse */
+}
+
+/* Estilo para el enlace de "Editar" */
+.product-actions .edit-link {
+    background-color: #a67c68; /* Marrón nude */
+}
+
+.product-actions .edit-link:hover {
+    background-color: #8b6856; /* Oscurecer al pasar el mouse */
+}
+
+/* Estilo para el enlace de "Volver al listado" */
+.product-actions .back-link {
+    background-color: #81a067; /* Verde suave */
+}
+
+.product-actions .back-link:hover {
+    background-color: #6f8d56; /* Oscurecer al pasar el mouse */
+}
+
+/* Estilo para el botón de "Eliminar" */
+.product-actions .action-button {
+    padding: 10px 15px;
+    background-color: #c76756; /* Rojo nude */
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilo cuando el mouse pasa sobre el botón de "Eliminar" */
+.product-actions .delete-button:hover {
+    background-color: #a75445; /* Oscurecer el rojo al pasar el mouse */
+}
+
+/* Estilo para mantener la coherencia en el diseño de los enlaces y botones */
+.product-actions a,
+.product-actions button {
+    display: inline-block;
+    margin: 5px;
+}
+
+/* Responsive para dispositivos móviles */
+@media (max-width: 600px) {
+    .product-detail {
+        padding: 15px;
+        margin: 20px 10px;
+    }
+
+    .product-detail p {
+        font-size: 14px;
+    }
+
+    .product-detail .product-image {
+        width: 90%;
+    }
+
+    .product-actions {
+        font-size: 14px;
+    }
+}

@@ -1,6 +1,6 @@
 <%= form_with(model: @user, url: @user.new_record? ? admin_users_path : admin_user_path(@user)) do |form| %>
   <% if @user.errors.any? %>
-    <div style="color: red">
+    <div class="error-messages">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
       <ul>
         <% @user.errors.each do |error| %>
@@ -10,42 +10,42 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-input" %>
   </div>
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
+  <div class="form-group">
+    <%= form.label :email, class: "form-label" %>
+    <%= form.text_field :email, class: "form-input" %>
   </div>
 
-  <div>
-    <%= form.label :phone, style: "display: block" %>
-    <%= form.text_field :phone %>
+  <div class="form-group">
+    <%= form.label :phone, class: "form-label" %>
+    <%= form.text_field :phone, class: "form-input" %>
   </div>
 
-  <div>
-    <%= form.label :password, style: "display: block" %>
-    <%= form.password_field :password %>
+  <div class="form-group">
+    <%= form.label :password, class: "form-label" %>
+    <%= form.password_field :password, class: "form-input" %>
   </div>
 
-  <div>
-    <%= form.label :password_confirmation, style: "display: block" %>
-    <%= form.password_field :password_confirmation %>
+  <div class="form-group">
+    <%= form.label :password_confirmation, class: "form-label" %>
+    <%= form.password_field :password_confirmation, class: "form-input" %>
   </div>
 
-  <div>
-    <%= form.label :entry_date, style: "display: block" %>
-    <%= form.datetime_field :entry_date %>
+  <div class="form-group">
+    <%= form.label :entry_date, class: "form-label" %>
+    <%= form.datetime_field :entry_date, class: "form-input" %>
   </div>
 
-  <div>
-    <%= form.label :role, "Choose a role" %>
-    <%= form.select :role, options_for_select(['employee', 'admin', 'manager'], selected: 'employee') %>
+  <div class="form-group">
+    <%= form.label :role, "Choose a role", class: "form-label" %>
+    <%= form.select :role, options_for_select(['employee', 'admin', 'manager'], selected: 'employee'), class: "form-input" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit "Save", class: "btn submit-btn" %>
   </div>
 <% end %>

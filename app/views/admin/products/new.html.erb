@@ -1,12 +1,14 @@
 <%= render 'layouts/navbar' %>
 <% content_for :title, "New product" %>
 
-<h1>New product</h1>
+<div class="edit-product-container">
+  <h1 class="edit-product-title">Nuevo Producto</h1>
 
-<%= render "form", product: @product %>
+  <%= render "form", product: @product %>
 
-<br>
+  <br>
 
-<div>
-  <%= link_to "Back to products", admin_products_path %>
+  <div class="back-links">
+    <%= link_to "Volver al listado", admin_products_path, class: "btn back-btn" %>
+  </div>
 </div>

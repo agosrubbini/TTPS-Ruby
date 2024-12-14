@@ -1,0 +1,102 @@
+/* Contenedor principal de la página de detalle de la venta */
+.show-product-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Estilo para los detalles de la venta */
+.sail-details {
+    margin-top: 20px;
+}
+
+.detail-label {
+    font-weight: bold;
+    color: #5e4636;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.sail-details p {
+    font-size: 16px;
+    color: #4d4d4d;
+    margin-bottom: 15px;
+}
+
+/* Estilo para el mensaje de notificación */
+.notice-message {
+    color: green;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilos para los enlaces como botones */
+.back-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 12px 20px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+/* Estilo para el botón "Volver al listado" */
+.back-btn {
+    background-color: #f44336; /* Rojo */
+    color: white;
+    border: 2px solid #f44336;
+}
+
+.back-btn:hover {
+    background-color: #e53935;
+    border-color: #e53935;
+}
+
+/* Estilo para el botón "Show this product" */
+.show-btn {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    border: 2px solid #4CAF50;
+}
+
+.show-btn:hover {
+    background-color: #45a049; /* Un verde más oscuro */
+    border-color: #45a049;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 600px) {
+    .show-product-container {
+        padding: 15px;
+        margin: 20px 10px;
+    }
+
+    .sail-details p {
+        font-size: 14px;
+    }
+
+    .back-links {
+        flex-direction: column;
+        gap: 10px; /* Menos separación en pantallas pequeñas */
+    }
+
+    .btn {
+        width: 100%; /* Hacer que los botones ocupen todo el ancho */
+    }
+}

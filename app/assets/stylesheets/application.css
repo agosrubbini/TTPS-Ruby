@@ -9,4 +9,12 @@
  * Consider organizing styles into separate files for maintainability.
  *= require navbar
  *= require products
+ *= require admin_tables
+ *= require product_detail
+ *= require product_edit
+ *= require sail_detail
+ *= require user_detail
+ *= require user_edit
+ *= require user_new
+
  */

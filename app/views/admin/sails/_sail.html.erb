@@ -1,22 +1,22 @@
-<div id="<%= dom_id sail %>">
-  <p>
-    <strong>Completed at:</strong>
-    <%= sail.completed_at.localtime.strftime("%d-%m-%Y %H:%M") %>
-  </p>
+ <div id="<%= dom_id sail %>" class="sail-details">
+    <p>
+      <strong class="detail-label">Completed at:</strong>
+      <%= sail.completed_at.localtime.strftime("%d-%m-%Y %H:%M") %>
+    </p>
 
-  <p>
-    <strong>Total amount:</strong>
-    <%= sail.total_amount %>
-  </p>
+    <p>
+      <strong class="detail-label">Total amount:</strong>
+      <%= sail.total_amount %>
+    </p>
 
-  <p>
-    <strong>Employee:</strong>
-    <%= sail.user_id %>
-  </p>
+    <p>
+      <strong class="detail-label">Employee:</strong>
+      <%= sail.user_id %>
+    </p>
 
-  <p>
-    <strong>Client dni:</strong>
-    <%= sail.client_dni %>
-  </p>
-
+    <p>
+      <strong class="detail-label">Client dni:</strong>
+      <%= sail.client_dni %>
+    </p>
+  </div>
 </div>
