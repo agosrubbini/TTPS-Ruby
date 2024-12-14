@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_04_181230) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_13_014724) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -84,23 +84,28 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_04_181230) do
   end
 
   create_table "sails", force: :cascade do |t|
-    t.datetime "completed_at"
-    t.decimal "total_amount"
-    t.integer "employee_id", null: false
-    t.integer "client_dni"
+    t.datetime "completed_at", null: false
+    t.decimal "total_amount", precision: 10, scale: 2, null: false
+    t.integer "user_id", null: false
+    t.string "client_dni", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["employee_id"], name: "index_sails_on_employee_id"
+    t.boolean "is_deleted", default: false
+    t.index ["user_id"], name: "index_sails_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "phone"
-    t.string "password_digest"
     t.datetime "entry_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "encrypted_password"
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.boolean "active", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
   end
@@ -116,5 +121,5 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_04_181230) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "products", "categories"
-  add_foreign_key "sails", "employees"
+  add_foreign_key "sails", "users"
 end

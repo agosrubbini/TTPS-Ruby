@@ -1,0 +1,55 @@
+<%= render 'layouts/navbar' %>
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Productos" %>
+<div class="admin-products-container table-container">
+  <div class="table-header">
+    <h1>Productos<h1>
+    <%= link_to 'Nuevo Producto', new_products_path, class: "btn new-admin-btn" %>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Talle</th>
+        <th>Color</th>
+        <th>Stock</th>
+        <th>Fecha De Ingreso</th>
+        <th>Fecha De Eliminación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><%= product.description %></td>
+          <td><%= product.price %></td>
+          <td><%= product.size %></td>
+          <td><%= product.color %></td>
+          <td><%= product.stock %></td>
+          <td><%= product.entry_date.localtime.strftime("%d-%m-%Y %H:%M") %></td>
+          <td><%= product.deleted_at.present? ? product.deleted_at.localtime.strftime("%d-%m-%Y %H:%M") : "Activo" %></td>
+          <td class="actions">
+            <%= link_to 'Ver', admin_product_path(product), class: "btn" %>
+            <%= link_to 'Editar', edit_admin_product_path(product), class: "btn" %>
+            
+            <% if product.deleted_at.present? %>
+              <%= form_with url: activate_admin_product_path(product), method: :patch, local: true do |form| %>
+                <%= form.submit 'Activar', class: 'activate-btn btn btn-success' %>
+              <% end %>
+            <% else %>
+              <%= form_with(model: product, url: admin_product_path(product), method: :delete, local: true) do |form| %>
+                <%= form.submit 'Eliminar', data: { confirm: '¿Estás seguro de que quieres eliminar este producto?' }, class: 'delete-btn btn btn-danger' %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+

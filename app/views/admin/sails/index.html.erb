@@ -1,0 +1,45 @@
+<%= render 'layouts/navbar' %>
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Ventas" %>
+<div class="admin-sails-container table-container">
+  <div class="table-header">
+    <h1>Ventas<h1>
+    <%= link_to 'Nueva Venta', new_sails_path, class: "btn new-admin-btn" %>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Monto Total</th>
+        <th>Dni del Cliente</th>
+        <th>Empleado</th>
+        <th>Fecha y Hora</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @sails.each do |sail| %>
+        <tr>
+          <td><%= sail.id %></td>
+          <td><%= sail.total_amount %></td>
+          <td><%= sail.client_dni %></td>
+          <td><%= sail.user.name %></td>
+          <td><%= sail.completed_at.localtime.strftime("%d-%m-%Y %H:%M") %></td>
+          <td><%= sail.is_deleted? ? 'Cancelada' : 'Realizada' %></td>
+          <td class="actions">
+            <%= link_to 'Ver', admin_sail_path(sail), class: "btn" %>
+            <% if sail.is_deleted == false %>
+              <%= form_with(model: sail, url: admin_sail_path(sail), method: :delete, local: true) do |form| %>
+                <%= form.submit 'Cancelar', data: { confirm: '¿Estás seguro de que quieres cancelar rsta venta?' }, class: 'delete-btn btn btn-danger' %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+

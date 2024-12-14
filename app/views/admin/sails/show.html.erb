@@ -1,0 +1,11 @@
+<%= render 'layouts/navbar' %>
+<p style="color: green"><%= notice %></p>
+
+<%= render @sail %>
+
+<div>
+  <%= link_to "Editar", edit_admin_sail_path(@sail) %> |
+  <%= link_to "Volver al listado", admin_sails_path %>
+
+  <%= button_to "Cancelar", @sail, method: :delete %>
+</div>

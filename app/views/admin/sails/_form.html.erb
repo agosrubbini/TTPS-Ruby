@@ -1,0 +1,41 @@
+<!-- app/views/sails/new.html.erb -->
+<%= form_with(model: @sail, local: true) do |form| %>
+  <div>
+    <%= form.label :employee_id %>
+    <%= form.collection_select :employee_id, User.all, :id, :name, prompt: "Selecciona un empleado" %>
+  </div>
+
+  <div>
+    <%= form.label :client_dni %>
+    <%= form.text_field :client_dni %>
+  </div>
+
+  <div id="products-container">
+    <h3>Productos</h3>
+    <%= form.fields_for :products_sails do |product_sail| %>
+      <div class="product-fields">
+        <%= product_sail.collection_select :product_id, Product.all, :id, :name_with_size_and_color, prompt: "Selecciona un producto" %>
+        <%= product_sail.number_field :amount_sold, min: 1, placeholder: "Cantidad" %>
+        <button type="button" class="remove-product">Eliminar</button>
+      </div>
+    <% end %>
+  </div>
+
+  <button type="button" id="add-product-button">Agregar Producto</button>
+
+  <%= form.submit "Crear Venta" %>
+<% end %>
+
+<!-- Plantilla para nuevos productos -->
+<script type="text/html" id="product-template">
+  <div class="product-fields">
+    <select name="sail[products_sails_attributes][new_product_record][product_id]">
+      <%= options_from_collection_for_select(Product.all, :id, :name_with_size_and_color) %>
+    </select>
+    <input type="number" 
+           name="sail[products_sails_attributes][new_product_record][amount_sold]" 
+           min="1" 
+           placeholder="Cantidad">
+    <button type="button" class="remove-product">Eliminar</button>
+  </div>
+</script>

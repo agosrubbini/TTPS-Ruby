@@ -1,14 +1,18 @@
 class Sail < ApplicationRecord
-  belongs_to :user, foreign_key: 'employee_id' # Asumiendo que `employee_id` es la FK en Sail
-  validate :only_employee_can_create_sale
+  belongs_to :user, class_name: 'User', foreign_key: 'user_id'
   has_many :products_sails
   has_many :products, through: :products_sails
 
-  private
+  accepts_nested_attributes_for :products_sails, 
+    allow_destroy: true, 
+    reject_if: :all_blank
 
-  def only_employee_can_create_sale
-    if user && !user.has_role?(:employee)
-      errors.add(:user, 'must be an employee to create a sale')
-    end
+  validates :completed_at, presence: true
+  validates :total_amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
+
+  
+  def destroy
+    update(is_deleted: true)
   end
+
 end

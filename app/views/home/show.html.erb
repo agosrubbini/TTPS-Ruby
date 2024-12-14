@@ -1,0 +1,27 @@
+<%= render 'layouts/navbar' %>
+<div id="product-details">
+  <!-- Imagen del producto -->
+  <div class="product-image">
+    <% if @product.images.attached? %>
+      <%= image_tag @product.images.first.variant(resize_to_limit: [600, 600]), class: "product-img" %>
+    <% else %>
+      <p>No hay imágenes disponibles.</p>
+    <% end %>
+  </div>
+
+  <!-- Información del producto -->
+  <div class="product-info">
+    <h1><%= @product.name %></h1>
+    <p><strong>Descripción:</strong> <%= @product.description %></p>
+    <p class="product-price"><strong>Precio:</strong> $<%= @product.price %></p>
+    <p><strong>Stock:</strong> <%= @product.stock %></p>
+    <p><strong>Color:</strong> <%= @product.color %></p>
+    <p><strong>Talle:</strong> <%= @product.size %></p>
+    <p class="product-category"><strong>Categoría:</strong> <%= @product.category.name %></p>
+
+    <div class="back-button">
+        <%= link_to 'Volver al listado', root_path, class: 'btn-back' %>
+    </div>
+    
+  </div>
+</div>

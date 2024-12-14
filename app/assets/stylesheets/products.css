@@ -1,0 +1,161 @@
+/* Estilo para el contenedor principal de los productos */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 productos por fila */
+    gap: 20px; /* Espaciado entre productos */
+    padding: 20px;
+    justify-items: center;
+  }
+  
+  /* Estilo para cada tarjeta de producto */
+  .product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-10px); /* Efecto de elevación al pasar el mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Estilo para la imagen del producto */
+  .product-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+  }
+  
+  /* Estilo para la información del producto */
+  .product-info {
+    padding: 15px;
+    text-align: center;
+  }
+  
+  /* Estilo para el nombre del producto */
+  .product-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0;
+  }
+  
+  /* Estilo para el precio del producto */
+  .product-price {
+    font-size: 1rem;
+    color: #444; /* Color amarillo para resaltar el precio */
+    margin: 5px 0;
+  }
+  
+  /* Estilo para el stock del producto */
+  .product-stock {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 5px 0;
+  }
+/* Detalle del producto */
+/* Estilo general para la vista de detalles del producto */
+#product-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Contenedor para la imagen del producto */
+  #product-details .product-image {
+    flex: 1;
+    margin-right: 40px;
+  }
+  
+  #product-details .product-image img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  #product-details .product-image img:hover {
+    transform: scale(1.05); /* Efecto hover para las imágenes */
+  }
+  
+  /* Contenedor para la información del producto */
+  #product-details .product-info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #fff;
+    padding: 30px; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  #product-details .product-info h1 {
+    font-size: 2.5rem; 
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  #product-details .product-info p {
+    font-size: 1.3rem; 
+    color: #888;
+    margin: 10px 0;
+  }
+  
+  #product-details .product-info strong {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  /* Estilo para el precio */
+  #product-details .product-info .product-price {
+    font-size: 1.5rem; /* Aumento del tamaño del precio */
+    color: #888;
+    margin-top: 20px;
+  }
+  
+  /* Estilo para la categoría, stock, color y talle */
+  #product-details .product-info .product-category,
+  #product-details .product-info .product-stock,
+  #product-details .product-info .product-color,
+  #product-details .product-info .product-size {
+    font-size: 1.5rem; /* Aumento del tamaño de la fuente */
+    color: #888; /* Color gris aplicado a estos atributos */
+    margin-top: 10px;
+  }
+  
+  /* Estilo para el botón de volver al listado */
+  #product-details .product-info .back-button {
+    margin-top: 40px; /* Aumento del margen superior */
+    width: 100%;
+    text-align: center;
+  }
+  
+  #product-details .product-info .btn-back {
+    background-color: #333;
+    color: #fff;
+    padding: 16px 30px; /* Aumento del tamaño del botón */
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem; /* Aumento del tamaño de la fuente del botón */
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  #product-details .product-info .btn-back:hover {
+    background-color: #444; /* Cambio de color al pasar el mouse */
+  }

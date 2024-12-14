@@ -1,0 +1,44 @@
+<%= render 'layouts/navbar' %>
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Usuarios" %>
+<div class="admin-users-container table-container">
+  <div class="table-header">
+    <h1>Usuarios<h1>
+    <%= link_to 'Nuevo Usuario', new_admin_user_path, class: "btn new-admin-btn" %>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Telefono</th>
+        <th>Fecha de Ingreso</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= (user.name || "aaaa") %></td>
+          <td><%= user.email %></td>
+          <td><%= (user.phone || 22222222) %></td>
+          <td><%= (user.entry_date || Time.now).localtime.strftime("%d-%m-%Y %H:%M") %></td>
+          <td><%= user.active ? 'Activo' : 'Eliminado' %></td>
+          <td class="actions">
+            <%= link_to 'Ver', admin_user_path(user), class: "btn" %>
+            <%= link_to 'Editar', edit_admin_user_path(user), class: "btn" %>
+            <% if user.active? %>
+              <%= form_with(url: admin_user_path(user), method: :delete, local: true) do %>
+                <%= submit_tag 'Eliminar', class: "btn" %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+

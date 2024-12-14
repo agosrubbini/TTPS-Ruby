@@ -1,0 +1,62 @@
+<%= render 'layouts/navbar' %>
+<div id="<%= dom_id product %>">
+  <p>
+    <strong>Nombre:</strong>
+    <%= product.name %>
+  </p>
+
+  <p>
+    <strong>Descripcion:</strong>
+    <%= product.description %>
+  </p>
+
+  <p>
+    <strong>Precio:</strong>
+    <%= product.price %>
+  </p>
+
+  <p>
+    <strong>Stock:</strong>
+    <%= product.stock %>
+  </p>
+
+  <p>
+    <strong>Color:</strong>
+    <%= product.color %>
+  </p>
+
+  <p>
+    <strong>Talle:</strong>
+    <%= product.size %>
+  </p>
+
+  <p>
+  <strong>Categoria:</strong>
+  <%= product.category.name %> 
+  </p>
+
+  <p>
+  <strong>Fecha de Ingreso:</strong>
+  <%= product.entry_date.localtime.strftime("%d-%m-%Y %H:%M") %>
+  </p>
+
+
+  <p>
+  <strong>Fecha de Eliminación:</strong>
+  <%= product.deleted_at.present? ? product.deleted_at.localtime.strftime("%d-%m-%Y %H:%M") : "Activo" %>
+  </p>
+
+
+  <p>
+  <strong>Imagenes:</strong>
+  <% if product.images.attached? %>
+    <% product.images.each do |image| %>
+      <%= image_tag image.variant(resize_to_limit:[300, 300]) %>
+      <br>
+    <% end %>
+  <% else %>
+    No images attached.
+  <% end %>
+  </p>
+
+</div>
