@@ -28,11 +28,15 @@ class User < ApplicationRecord
   def active?
     active == true
   end
+
+ 
   # def recover
   #   update(encrypted_password: BCrypt::Password.create('123456'))
   # end
   # 
-  
+  def soft_delete
+    update_attribute(:active, false)
+  end
 
   private
 
@@ -57,6 +61,7 @@ class User < ApplicationRecord
     self.save # Guardamos el usuario con la nueva contraseña
   end
 
+  
   
   
 end

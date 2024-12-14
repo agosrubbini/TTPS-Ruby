@@ -10,14 +10,22 @@ class Ability
       can :manage, :all
     elsif user.has_role?(:manager)
       can :manage, Product
-      can :manage, Sale
+      can :manage, Sail
+      can :create, User
+
       can :manage, User, roles: { name: 'employee' }  # El gerente puede gestionar usuarios con rol 'employee'
       cannot :create, User, roles: { name: 'admin' }   # El gerente no puede crear usuarios con rol 'admin'
       cannot :update, User, roles: { name: 'admin' }   # El gerente no puede modificar usuarios con rol 'admin'
     elsif user.has_role?(:employee)
       can :manage, Product
-      can :manage, Sale
+      can :manage, Sail
+      can [:show, :update], User, id: user.id
       cannot :manage, User  # El empleado no puede gestionar usuarios
+      cannot :create, User
+    else
+      # Para usuarios no autenticados o sin roles
+      cannot :manage, :all
+      cannot :manage, Sail
     end
   end
 end

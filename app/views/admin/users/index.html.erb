@@ -13,6 +13,7 @@
       <tr>
         <th>Nombre</th>
         <th>Email</th>
+        <th>Rol</th>
         <th>Telefono</th>
         <th>Fecha de Ingreso</th>
         <th>Estado</th>
@@ -22,9 +23,10 @@
     <tbody>
       <% @users.each do |user| %>
         <tr>
-          <td><%= (user.name || "aaaa") %></td>
+          <td><%= (user.name) %></td>
           <td><%= user.email %></td>
-          <td><%= (user.phone || 22222222) %></td>
+          <td><%= user.roles.first.name %></td>
+          <td><%= (user.phone) %></td>
           <td><%= (user.entry_date || Time.now).localtime.strftime("%d-%m-%Y %H:%M") %></td>
           <td><%= user.active ? 'Activo' : 'Eliminado' %></td>
           <td class="actions">

@@ -1,4 +1,5 @@
-<%= form_with(model: @product, url: admin_product_path(@product)) do |form| %>
+<%= form_with(model: @product, url: @product.new_record? ? admin_products_path : admin_product_path(@product)) do |form| %>
+
 
 
   <div>

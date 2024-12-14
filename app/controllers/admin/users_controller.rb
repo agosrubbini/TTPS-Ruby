@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
 
   # GET /categories or /categories.json
   def index
@@ -9,15 +9,18 @@ class Admin::UsersController < ApplicationController
 
   # GET /categories/1 or /categories/1.json
   def show
+    authorize! :show, @user
   end
 
   # GET /categories/new
   def new
+    authorize! :create, @user
     @user = User.new
   end
 
   # GET /categories/1/edit
   def edit
+    authorize! :edit, @user
   end
 
   # POST /categories or /categories.json
@@ -31,21 +34,30 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /categories/1 or /categories/1.json
   def update
+    authorize! :update, @user
+    # Primero, manejar la asignación del rol
+    @user.add_role_mio(params[:user][:role]) if params[:user][:role].present?
+    
     if @user.update(user_params)
       redirect_to admin_user_path(@user), notice: 'Usuario actualizado exitosamente.'
     else
-      render :edit
+      # Agrega más detalle al error
+      flash.now[:alert] = @user.errors.full_messages.join(', ')
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /categories/1 or /categories/1.json
   def destroy
-    @user.update(active: false) 
-
-    respond_to do |format|
-      format.html { redirect_to admin_user_path, status: :see_other, notice: "Category was successfully destroyed." }
+    authorize! :destroy, @user
+    @user = User.find(params[:id])
+    @user.update_column(:active, false)
+    @user.update(password: SecureRandom.hex)
+    if @user.soft_delete
+      redirect_to admin_users_path, notice: "Usuario eliminado exitosamente."
+    else
+      redirect_to admin_users_path, alert: "No se pudo eliminar el usuario."
     end
   end
 

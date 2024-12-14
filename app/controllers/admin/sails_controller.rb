@@ -1,13 +1,31 @@
 class Admin::SailsController < ApplicationController
-  before_action :load_products, only: [:new, :add_product]
+  before_action :load_products, only: [:new, :add_product, :index ]
   
   def new
     @sail = Sail.new
     @selected_products = load_cart
   end
 
+  def show
+    @sail = Sail.find(params[:id])  
+  end
+
   def index
     @sails = Sail.all
+  end
+
+  def destroy
+    @sail = Sail.find(params[:id])
+    @sail.products_sails.each do |product_sail|
+      product = Product.find(product_sail.product_id)
+      product.update(stock: product.stock + product_sail.amount_sold)
+    end
+    if @sail.update(is_deleted: true)  # Marca la venta como cancelada
+      flash[:notice] = "Venta cancelada exitosamente."
+    else
+      flash[:alert] = "No se pudo cancelar la venta."
+    end
+    redirect_to admin_sails_path
   end
 
   def add_product
@@ -38,7 +56,7 @@ class Admin::SailsController < ApplicationController
         total_price = product.price * amount
 
         # Crear la relación en ProductSail
-        ProductSail.create!(
+        ProductsSail.create!(
           sail: @sail,
           product: product,
           amount_sold: amount,
@@ -50,7 +68,7 @@ class Admin::SailsController < ApplicationController
       end
 
       clear_cart
-      redirect_to admin_sail_path(@product), notice: "Venta creada exitosamente."
+      redirect_to admin_sail_path(@sail), notice: "Venta creada exitosamente."
     else
       flash[:alert] = @sail.errors.full_messages.join(", ")
       redirect_to new_admin_sail_path
@@ -83,6 +101,6 @@ class Admin::SailsController < ApplicationController
   end
 
   def sail_params
-    params.require(:sail).permit(:employee_id, :client_dni, :completed_at)
+    params.require(:sail).permit(:user_id, :client_dni, :completed_at)
   end
 end
