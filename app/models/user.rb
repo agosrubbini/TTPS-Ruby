@@ -1,22 +1,12 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   rolify
   has_many :sails, foreign_key: "employee_id"
 
-  # Validación para roles
-  # validates_inclusion_of :role, in: ['employee', 'admin', 'manager']
-
-  # validates :name, presence: true, uniqueness: true
-  validates :email, presence: true, uniqueness: true
-
-  validates :password, presence: true, length: { minimum: 6 }, confirmation: true, unless: -> { skip_password_validation }
-
-  attr_accessor :password, :password_confirmation, :skip_password_validation
-
-  before_save :hash_password
+  validates :name, presence: true, uniqueness: { message: "nombre no disponible" }
+  validates :email, presence: true, uniqueness: { message: "no disponible" }
+  validate :password_presence
 
   def add_role_mio(role_name)
     if Role.exists?(name: role_name)
@@ -29,27 +19,17 @@ class User < ApplicationRecord
     active == true
   end
 
-
-  # def recover
-  #   update(encrypted_password: BCrypt::Password.create('123456'))
-  # end
-  #
   def soft_delete
     update_attribute(:active, false)
   end
 
   private
 
-  def password_required
-    if encrypted_password.blank? && password.blank?
-      errors.add(:password, "can't be blank")
-    end
-  end
-
-  def hash_password
-    # Solo encripta la contraseña si la nueva contraseña está presente
-    if password.present?
-      self.encrypted_password = BCrypt::Password.create(password)
+  def password_presence
+    if password.present? && password_confirmation.blank?
+      errors.add(:password_confirmation, "debe ser completado el campo confirmar contraseña si ingresa una nueva contraseña")
+    elsif password_confirmation.present? && password.blank?
+      errors.add(:password, "debe ser completado el campo contraseña si ingresa una confirmación")
     end
   end
 

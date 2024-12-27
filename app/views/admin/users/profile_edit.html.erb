@@ -1,29 +1,41 @@
 <%= render 'layouts/navbar' %>
 
-<div id="<%= dom_id user %>">
-  <p>
-    <strong>Name:</strong>
-    <%= user.name %>
-  </p>
+<%= form_with(model: @user, url: update_profile_admin_users_path, method: :patch, local: true) do |form| %>
+  <div class="form-group">
+    <%= form.label :name, "Nombre" %>
+    <%= form.text_field :name, class: "form-control", required: true %>
+  </div>
 
-  <p>
-    <strong>Email:</strong>
-    <%= user.email %>
-  </p>
+  <div class="form-group">
+    <%= form.label :email, "Correo electrónico" %>
+    <%= form.email_field :email, class: "form-control", required: true %>
+  </div>
 
-  <p>
-    <strong>Phone:</strong>
-    <%= user.phone %>
-  </p>
+  <div class="form-group">
+    <%= form.label :phone, "Teléfono" %>
+    <%= form.text_field :phone, class: "form-control" %>
+  </div>
 
-  <p>
-    <strong>Entry date:</strong>
-    <%= user.entry_date.localtime.strftime("%d-%m-%Y %H:%M") %>
-  </p>
+  <div class="form-group">
+    <%= form.label :password, "Contraseña (opcional)" %>
+    <%= form.password_field :password, class: "form-control" %>
+  </div>
 
-  <p>
-    <strong>Estado:</strong>
-    <%= user.active ? 'Activo' : 'Desactivado' %>
-  </p>
+  <div class="form-group">
+    <%= form.label :password_confirmation, "Confirmar contraseña" %>
+    <%= form.password_field :password_confirmation, class: "form-control" %>
+  </div>
 
-</div>
+  <div class="form-group">
+    <%= form.submit "Guardar cambios", class: "btn btn-primary" %>
+    <%= link_to "Cancelar", profile_admin_users_path, class: "btn btn-secondary" %>
+  </div>
+
+  <% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+  <% end %>
+  
+<% end %>
+

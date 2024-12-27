@@ -8,17 +8,28 @@ class Admin::UsersController < ApplicationController
     @users = User.all
   end
 
+  def profile_edit
+    @user = current_user
+  end
+
   def profile
     @user = current_user
-    render :profile  # Usará una nueva vista profile.html.erb
+    render :profile
   end
 
   def update_profile
     @user = current_user
+    if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
+    end
+
     if @user.update(profile_params)
-      redirect_to admin_profile_edit_path, notice: "Perfil actualizado exitosamente."
+      bypass_sign_in(@user) if params[:user][:password].present?
+      redirect_to profile_admin_users_path, notice: "Perfil actualizado exitosamente."
     else
-      render :profile_edit
+      flash.now[:alert] = @user.errors.full_messages.join(", ")
+      render :profile_edit, status: :unprocessable_entity
     end
   end
 
@@ -83,5 +94,9 @@ class Admin::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :phone, :encrypted_password, :entry_date, :active, :password, :password_confirmation)
+  end
+
+  def profile_params
+    params.require(:user).permit(:name, :email, :phone, :password, :password_confirmation)
   end
 end
