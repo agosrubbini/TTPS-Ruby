@@ -1,0 +1,29 @@
+<%= render 'layouts/navbar' %>
+
+<div id="<%= dom_id user %>">
+  <p>
+    <strong>Name:</strong>
+    <%= user.name %>
+  </p>
+
+  <p>
+    <strong>Email:</strong>
+    <%= user.email %>
+  </p>
+
+  <p>
+    <strong>Phone:</strong>
+    <%= user.phone %>
+  </p>
+
+  <p>
+    <strong>Entry date:</strong>
+    <%= user.entry_date.localtime.strftime("%d-%m-%Y %H:%M") %>
+  </p>
+
+  <p>
+    <strong>Estado:</strong>
+    <%= user.active ? 'Activo' : 'Desactivado' %>
+  </p>
+
+</div>

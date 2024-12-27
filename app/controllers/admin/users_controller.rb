@@ -1,10 +1,25 @@
 class Admin::UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  before_action :set_user, only: [ :show, :edit, :update, :destroy ]
+  load_and_authorize_resource except: [ :profile, :update_profile ]
+
 
   # GET /categories or /categories.json
   def index
     @users = User.all
+  end
+
+  def profile
+    @user = current_user
+    render :profile  # Usará una nueva vista profile.html.erb
+  end
+
+  def update_profile
+    @user = current_user
+    if @user.update(profile_params)
+      redirect_to admin_profile_edit_path, notice: "Perfil actualizado exitosamente."
+    else
+      render :profile_edit
+    end
   end
 
   # GET /categories/1 or /categories/1.json
@@ -28,7 +43,7 @@ class Admin::UsersController < ApplicationController
     @user = User.new(user_params)
     @user.add_role_mio(params[:user][:role])
     if @user.save
-      redirect_to admin_user_path(@user), notice: 'Usuario creado exitosamente.'
+      redirect_to admin_user_path(@user), notice: "Usuario creado exitosamente."
     else
       render :new
     end
@@ -38,12 +53,12 @@ class Admin::UsersController < ApplicationController
     authorize! :update, @user
     # Primero, manejar la asignación del rol
     @user.add_role_mio(params[:user][:role]) if params[:user][:role].present?
-    
+
     if @user.update(user_params)
-      redirect_to admin_user_path(@user), notice: 'Usuario actualizado exitosamente.'
+      redirect_to admin_user_path(@user), notice: "Usuario actualizado exitosamente."
     else
       # Agrega más detalle al error
-      flash.now[:alert] = @user.errors.full_messages.join(', ')
+      flash.now[:alert] = @user.errors.full_messages.join(", ")
       render :edit, status: :unprocessable_entity
     end
   end

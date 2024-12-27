@@ -1,15 +1,21 @@
 Rails.application.routes.draw do
-  root 'home#index'
+  root "home#index"
   devise_for :users
-  
+
   namespace :admin do
     resources :categories
   end
+
   namespace :admin do
     resources :users do
       member do
         patch :activate
         patch :deactivate
+      end
+      collection do
+        get :profile
+        get :profile_edit
+        patch :update_profile
       end
     end
   end
@@ -21,20 +27,21 @@ Rails.application.routes.draw do
       end
     end
   end
-  
+
   namespace :admin do
     resources :sails do
-      post 'add_product', on: :collection
+      post "add_product", on: :collection
     end
   end
 
-  get 'home/show/:id', to: 'home#show', as: 'home_show'
-  get 'admin/products/new/', to: 'products#new', as: 'new_products'
-  get 'admin/product/edit/:id', to: 'products#edit', as: 'edit_products'
-  get 'admin/sails/new/', to: 'sails#new', as: 'new_sails'
-  get 'admin/user/new/', to: 'users#new', as: 'new_users'
-  get 'admin/user/edit/:id', to: 'users#edit', as: 'edit_users'
-
+  get "home/show/:id", to: "home#show", as: "home_show"
+  get "admin/products/new/", to: "products#new", as: "new_products"
+  get "admin/product/edit/:id", to: "products#edit", as: "edit_products"
+  get "admin/sails/new/", to: "sails#new", as: "new_sails"
+  get "admin/user/new/", to: "users#new", as: "new_users"
+  get "admin/user/edit/:id", to: "users#edit", as: "edit_users"
+  get "admin/user/profile", to: "user#profile"
+  patch "admin/user/update", to: "users#update_profile"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

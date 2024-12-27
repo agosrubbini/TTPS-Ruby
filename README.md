@@ -13,7 +13,7 @@
 ### Clonar el repo
 
 ```bash
-$ git clone https://github.com/joaquinsantacruz/Avivas.git
+$ git clone https://github.com/agosrubbini/TTPS-Ruby.git
 ```
 
 ### Instalar dependencias
@@ -35,6 +35,13 @@ $ rails server
 ```
 
 
+
+# Ejecucion del seeds.rb:
+
+```bash
+$ rails db:seed
+```
+
 # Decisiones de diseño:
 
 ## Gemas:
@@ -42,6 +49,7 @@ $ rails server
 - CanCanCan para manejar las autorizaciones que tiene cada rol
 - Devise para implementar el inicio y cierre de session
 - ActiveStorage para el almacenamiento de las imagenes de los productos
+- Ransack para implementar la busqueda de productos por nombre y el filtrado por categoria.
 
 ## Tablas:
 
@@ -58,10 +66,12 @@ Se pre-cargaron datos para que sea facil el uso de la aplicacion.
 
 Usuario administrador:
 
-- Email: `admin@mail.com`
+- Email: `admin@gmail.com`
 - Contraseña: `123456`
 
 Usuario Empleado:
 
-- Emails: `emple@mail.com`
+- Emails: `emple@gmail.com`
 - Contraseña: `123456`
+
+agregar seeds corregir lo de joauqin

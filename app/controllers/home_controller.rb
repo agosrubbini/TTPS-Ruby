@@ -1,6 +1,8 @@
 class HomeController < ApplicationController
   def index
-    @products = Product.all
+    @q = Product.ransack(params[:q])
+    # @products = Product.all
+    @products = @q.result(distinct: true).includes(:category)
   end
   def show
     @product = Product.find(params[:id])

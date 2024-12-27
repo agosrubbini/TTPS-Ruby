@@ -20,6 +20,9 @@
             <a class="nav-link" href="<%= root_path %>">Avivas</a>
           </li>
           <li class="nav-item">
+          <%= link_to "Ver mi perfil", profile_admin_users_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
             <%= form_with url: destroy_user_session_path, method: :delete, local: true, class: "logout-form" do |form| %>
               <%= form.submit "Cerrar Sesión", class: "logout-btn btn btn-link nav-link" %>
             <% end %>

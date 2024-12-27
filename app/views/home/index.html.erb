@@ -1,5 +1,30 @@
 <%= render 'layouts/navbar' %>
 
+<div class="search-section mb-4 p-4 bg-gray-100">
+  <%= search_form_for @q, url: root_path, method: :get do |f| %>
+    <div class="flex gap-4 items-center">
+      <div class="flex-1">
+        <%= f.label :name_cont, "Nombre del producto", class: "block mb-2" %>
+        <%= f.search_field :name_cont, class: "w-full p-2 border rounded", placeholder: "Buscar por nombre..." %>
+      </div>
+      
+      <div class="flex-1">
+        <%= f.label :category_id_eq, "Categoría", class: "block mb-2" %>
+        <%= f.collection_select :category_id_eq, 
+                              Category.all, 
+                              :id, 
+                              :name, 
+                              { include_blank: "Todas las categorías" }, 
+                              class: "w-full p-2 border rounded" %>
+      </div>
+
+      <div class="flex items-end">
+        <%= f.submit "Buscar", class: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" %>
+        <%= link_to "Limpiar", root_path, class: "ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400" %>
+      </div>
+    </div>
+  <% end %>
+</div>
 <div class="product-grid">
   <% @products.each do |product| %>
     <div class="product-card" id="<%= dom_id(product) %>">
