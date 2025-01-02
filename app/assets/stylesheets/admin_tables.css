@@ -126,3 +126,31 @@ table {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
   
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    list-style: none;
+  }
+  
+  .pagination a, .pagination span {
+    margin: 0 5px;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    color: #5e4636; /* Marrón oscuro */
+    background-color: #f7f5f4; /* Fondo claro */
+    border: 1px solid #d1cfcf;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination a:hover {
+    background-color: #eee4dd; /* Marrón claro */
+  }
+  
+  .pagination .current {
+    font-weight: bold;
+    background-color: #b7a99a; /* Marrón claro */
+    color: white;
+  }
+  

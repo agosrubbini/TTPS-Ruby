@@ -47,11 +47,12 @@ $ rails db:seed
 # Decisiones de diseño:
 
 ## Gemas:
-- Rolify para manejar los tres roles (admin, manager, employee)
-- CanCanCan para manejar las autorizaciones que tiene cada rol
-- Devise para implementar el inicio y cierre de session
-- ActiveStorage para el almacenamiento de las imagenes de los productos
+- Rolify para manejar los tres roles (admin, manager, employee).
+- CanCanCan para manejar las autorizaciones que tiene cada rol.
+- Devise para implementar el inicio y cierre de session.
+- ActiveStorage para el almacenamiento de las imagenes de los productos.
 - Ransack para implementar la busqueda de productos por nombre y el filtrado por categoria.
+- Kaminari para implementar la paginacion de tablas y del storefront.
 
 ## Tablas:
 

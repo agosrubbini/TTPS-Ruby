@@ -12,6 +12,7 @@ class Admin::SalesController < ApplicationController
 
   def index
     @sales = Sale.all
+    @sales = Sale.page(params[:page]).per(4)
   end
 
   def destroy

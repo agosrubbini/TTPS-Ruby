@@ -1,0 +1,14 @@
+es:
+  views:
+    pagination:
+      first: "Primero"
+      last: "Último"
+      previous: "Anterior"
+      next: "Siguiente"
+      truncate: "..."
+    roles:
+      choose_role: "Selecciona un rol"
+  roles:
+    admin: "Administrador"
+    employee: "Empleado"
+    manager: "Gerente"

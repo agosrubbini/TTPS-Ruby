@@ -25,7 +25,7 @@
         <tr>
           <td><%= (user.name) %></td>
           <td><%= user.email %></td>
-          <td><%= user.roles.first.name %></td>
+          <td><%= I18n.t("roles.#{user.roles.first.name}") %></td>
           <td><%= (user.phone) %></td>
           <td><%= (user.entry_date || Time.now).localtime.strftime("%d-%m-%Y %H:%M") %></td>
           <td><%= user.active ? 'Activo' : 'Eliminado' %></td>
@@ -42,5 +42,8 @@
       <% end %>
     </tbody>
   </table>
+  <div class="pagination">
+    <%= paginate @users %>
+  </div>
 </div>
 

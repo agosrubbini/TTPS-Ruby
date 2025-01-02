@@ -6,6 +6,7 @@ class Admin::UsersController < ApplicationController
   # GET /categories or /categories.json
   def index
     @users = User.all
+    @users = User.page(params[:page]).per(4)
   end
 
   def profile_edit

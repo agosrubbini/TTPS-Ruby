@@ -4,6 +4,7 @@ class Admin::ProductsController < ApplicationController
   # GET /products or /products.json
   def index
     @products = Product.all
+    @products = Product.page(params[:page]).per(4)
   end
 
   # GET /products/1 or /products/1.json
@@ -12,9 +13,9 @@ class Admin::ProductsController < ApplicationController
 
   def activate
     if @product.update(deleted_at: nil)  # Establece 'deleted_at' como nil para activar el producto
-      redirect_to admin_products_path, notice: 'Producto activado con éxito.'
+      redirect_to admin_products_path, notice: "Producto activado con éxito."
     else
-      redirect_to admin_products_path, alert: 'Error al activar el producto.'
+      redirect_to admin_products_path, alert: "Error al activar el producto."
     end
   end
 
@@ -55,12 +56,12 @@ class Admin::ProductsController < ApplicationController
   def destroy
     @product = Product.find(params[:id])
     @product.destroy  # Esto ahora actualizará deleted_at en lugar de eliminar el registro.
-  
+
     respond_to do |format|
       format.html { redirect_to admin_products_path, notice: "Product was successfully marked as deleted." }
     end
   end
-  
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
