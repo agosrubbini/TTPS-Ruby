@@ -2,6 +2,8 @@
 
 # Proyecto TTPS - Ruby
 
+El proyecto se basa en una aplicación de gestión de inventario de indumentaria. La aplicación permite al personal de la cadena administrar el stock de productos, realizar ventas y tener una página pública (storefront) que permite a los clientes ver los productos que la tienda tiene en stock.
+
 ## Requerimientos
 
 - Ruby 3.3.6
@@ -74,4 +76,4 @@ Usuario Empleado:
 - Emails: `emple@gmail.com`
 - Contraseña: `123456`
 
-agregar seeds corregir lo de joauqin
+

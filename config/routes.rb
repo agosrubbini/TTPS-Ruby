@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :sails do
+    resources :sales do
       post "add_product", on: :collection
     end
   end
@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   get "home/show/:id", to: "home#show", as: "home_show"
   get "admin/products/new/", to: "products#new", as: "new_products"
   get "admin/product/edit/:id", to: "products#edit", as: "edit_products"
-  get "admin/sails/new/", to: "sails#new", as: "new_sails"
+  get "admin/sales/new/", to: "sales#new", as: "new_sales"
   get "admin/user/new/", to: "users#new", as: "new_users"
   get "admin/user/edit/:id", to: "users#edit", as: "edit_users"
   get "admin/user/profile", to: "user#profile"

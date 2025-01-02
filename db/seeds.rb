@@ -1,32 +1,38 @@
+puts("inicio")
 Role.find_or_create_by(name: 'admin')
+puts("role admin")
+
 Role.find_or_create_by(name: 'manager')
+puts("rol manager")
+
 Role.find_or_create_by(name: 'employee')
+puts("rol employee")
 
 Category.find_or_create_by(name: 'Remeras')
+puts("categoria remeras")
+
 Category.find_or_create_by(name: 'Buzos')
+puts("categoria buzos")
+
 Category.find_or_create_by(name: 'Pantalones')
+puts("categoria pantalones")
 
-# Encriptar la contraseña manualmente usando BCrypt
-# password = BCrypt::Password.create('123456')
-
-# Crear el usuario con la contraseña encriptada
-user = User.find_or_create_by(email: 'admin@gmail.com') do |u|
-  u.name = 'admin'
-  u.phone = '2213456789'
-  u.password  = '123456'
-  u.active = true
+def create_user_with_role(email, name, phone, password, active, role)
+  user = User.find_or_initialize_by(email: email) do |u|
+    u.name = name
+    u.phone = phone
+    u.password = password
+    u.password_confirmation = password
+    u.active = active
+  end
+  user.save!
+  user.add_role(role) unless user.has_role?(role)
+  puts("Rol #{role} asignado correctamente al usuario #{user.name}")
 end
-# Asignar rol de admin al usuario
-user.add_role(:admin)
 
-user = User.find_or_create_by(email: 'emple@gmail.com') do |u|
-  u.name = 'emple'
-  u.phone = '2213456789'
-  u.password  = '123456'
-  u.active = true
-end
-# Asignar rol de admin al usuario
-user.add_role(:employee)
+create_user_with_role('admin@gmail.com', 'admin', '2213456789', '123456', true, :admin)
+create_user_with_role('emple@gmail.com', 'emple', '2213456789', '123456', true, :employee)
+
 
 images_path = Rails.root.join('app', 'assets', 'images')
 
@@ -69,20 +75,22 @@ products.each do |attrs|
   attach_image(product, images_path)
 end
 
+puts("productos creados")
+
 require 'securerandom'
 
 5.times do |i|
   # Crear una venta con los atributos iniciales
-  sail = Sail.create!(
+  sale = Sale.create!(
     completed_at: DateTime.current,
-    total_amount: 0, # Se calculará luego
+    total_amount: 1, # Se calculará luego
     user_id: 2,
     client_dni: '22222222'
   )
 
   # Seleccionar entre 2 y 4 productos al azar
   selected_products = Product.order('RANDOM()').limit(rand(2..4))
-  products_sails_data = []
+  product_sales_data = []
 
   selected_products.each do |product|
     # Generar una cantidad aleatoria de productos vendidos, pero asegurarse de que no supere el stock
@@ -92,7 +100,7 @@ require 'securerandom'
     amount_sold = rand(5..max_amount)
 
     # Verificar si el producto ya está asociado a esta venta
-    existing_entry = products_sails_data.find { |entry| entry[:product_id] == product.id }
+    existing_entry = product_sales_data.find { |entry| entry[:product_id] == product.id }
 
     if existing_entry
       # Sumar la cantidad vendida al registro existente
@@ -103,27 +111,31 @@ require 'securerandom'
       end
     else
       # Crear un nuevo registro en la tabla intermedia
-      products_sails_data << {
+      product_sales_data << {
         product_id: product.id,
-        sail_id: sail.id,
+        sale_id: sale.id,
         amount_sold: amount_sold,
         total_amount: amount_sold * product.price
       }
     end
   end
+  puts("holaaaaaaaaaaaaaa")
 
-  # Crear los registros en ProductsSails
-  ProductsSail.insert_all(products_sails_data)
+  # Crear los registros en ProductSales
+  ProductSale.insert_all(product_sales_data)
+  puts("holaaaaaaaaaaaaaa")
 
   # Calcular el total_amount de la venta y actualizarla
-  sail_total_amount = products_sails_data.sum { |entry| entry[:total_amount] }
-  sail.update!(total_amount: sail_total_amount)
+  sale_total_amount = product_sales_data.sum { |entry| entry[:total_amount] }
+  sale.update!(total_amount: sale_total_amount)
+  puts("holaaaaaaaaaaaaaa")
 
   # Reducir el stock de los productos vendidos
-  products_sails_data.each do |entry|
+  product_sales_data.each do |entry|
     product = Product.find(entry[:product_id])
     product.update!(stock: product.stock - entry[:amount_sold])
   end
+  puts("holaaaaaaaaaaaaaa")
 
-  puts "Venta #{i + 1} creada con ID #{sail.id} y total de $#{sail.total_amount}"
+  puts "Venta #{i + 1} creada con ID #{sale.id} y total de $#{sale.total_amount}"
 end

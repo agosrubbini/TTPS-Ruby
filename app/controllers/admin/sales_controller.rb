@@ -1,31 +1,31 @@
-class Admin::SailsController < ApplicationController
-  before_action :load_products, only: [:new, :add_product, :index ]
-  
+class Admin::SalesController < ApplicationController
+  before_action :load_products, only: [ :new, :add_product, :index ]
+
   def new
-    @sail = Sail.new
+    @sale = Sale.new
     @selected_products = load_cart
   end
 
   def show
-    @sail = Sail.find(params[:id])  
+    @sale = Sale.find(params[:id])
   end
 
   def index
-    @sails = Sail.all
+    @sales = Sale.all
   end
 
   def destroy
-    @sail = Sail.find(params[:id])
-    @sail.products_sails.each do |product_sail|
-      product = Product.find(product_sail.product_id)
-      product.update(stock: product.stock + product_sail.amount_sold)
+    @sale = Sale.find(params[:id])
+    @sale.product_sales.each do |product_sale|
+      product = Product.find(product_sale.product_id)
+      product.update(stock: product.stock + product_sale.amount_sold)
     end
-    if @sail.update(is_deleted: true)  # Marca la venta como cancelada
+    if @sale.update(is_deleted: true)  # Marca la venta como cancelada
       flash[:notice] = "Venta cancelada exitosamente."
     else
       flash[:alert] = "No se pudo cancelar la venta."
     end
-    redirect_to admin_sails_path
+    redirect_to admin_sales_path
   end
 
   def add_product
@@ -42,22 +42,22 @@ class Admin::SailsController < ApplicationController
       flash[:notice] = "Producto agregado al carrito."
     end
 
-    redirect_to new_admin_sail_path
+    redirect_to new_admin_sale_path
   end
 
   def create
     cart = load_cart
-    @sail = Sail.new(sail_params)
-    @sail.total_amount = calculate_total(cart)
+    @sale = Sale.new(sale_params)
+    @sale.total_amount = calculate_total(cart)
 
-    if @sail.save
+    if @sale.save
       cart.each do |product_id, amount|
         product = Product.find(product_id)
         total_price = product.price * amount
 
         # Crear la relación en ProductSail
-        ProductsSail.create!(
-          sail: @sail,
+        ProductsSale.create!(
+          sale: @sale,
           product: product,
           amount_sold: amount,
           total_amount: total_price
@@ -68,10 +68,10 @@ class Admin::SailsController < ApplicationController
       end
 
       clear_cart
-      redirect_to admin_sail_path(@sail), notice: "Venta creada exitosamente."
+      redirect_to admin_sale_path(@sale), notice: "Venta creada exitosamente."
     else
-      flash[:alert] = @sail.errors.full_messages.join(", ")
-      redirect_to new_admin_sail_path
+      flash[:alert] = @sale.errors.full_messages.join(", ")
+      redirect_to new_admin_sale_path
     end
   end
 
@@ -100,7 +100,7 @@ class Admin::SailsController < ApplicationController
     end
   end
 
-  def sail_params
-    params.require(:sail).permit(:user_id, :client_dni, :completed_at)
+  def sale_params
+    params.require(:sale).permit(:user_id, :client_dni, :completed_at)
   end
 end

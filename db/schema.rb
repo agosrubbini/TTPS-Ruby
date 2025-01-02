@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_13_014724) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_27_190311) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -43,33 +43,34 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_13_014724) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
+  create_table "product_sales", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.integer "sale_id", null: false
+    t.integer "amount_sold", null: false
+    t.decimal "total_amount", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id", "sale_id"], name: "index_product_sales_on_product_id_and_sale_id", unique: true
+    t.index ["product_id"], name: "index_product_sales_on_product_id"
+    t.index ["sale_id"], name: "index_product_sales_on_sale_id"
   end
 
   create_table "products", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.decimal "price"
-    t.integer "stock"
-    t.string "color"
-    t.string "size"
+    t.string "name", null: false
+    t.text "description", null: false
+    t.decimal "price", null: false
+    t.integer "stock", null: false
+    t.string "color", null: false
+    t.string "size", null: false
     t.datetime "entry_date"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "category_id", null: false
     t.index ["category_id"], name: "index_products_on_category_id"
-  end
-
-  create_table "products_sails", force: :cascade do |t|
-    t.integer "product_id"
-    t.integer "sail_id"
-    t.integer "amount_sold"
-    t.decimal "total_amount"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["product_id", "sail_id"], name: "index_products_sails_on_product_id_and_sail_id", unique: true
-    t.index ["product_id"], name: "index_products_sails_on_product_id"
-    t.index ["sail_id"], name: "index_products_sails_on_sail_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -83,7 +84,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_13_014724) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
   end
 
-  create_table "sails", force: :cascade do |t|
+  create_table "sales", force: :cascade do |t|
     t.datetime "completed_at", null: false
     t.decimal "total_amount", precision: 10, scale: 2, null: false
     t.integer "user_id", null: false
@@ -91,7 +92,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_13_014724) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_deleted", default: false
-    t.index ["user_id"], name: "index_sails_on_user_id"
+    t.index ["user_id"], name: "index_sales_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -121,5 +122,5 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_13_014724) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "products", "categories"
-  add_foreign_key "sails", "users"
+  add_foreign_key "sales", "users"
 end

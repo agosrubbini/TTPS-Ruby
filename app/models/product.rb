@@ -1,8 +1,14 @@
 class Product < ApplicationRecord
   has_many_attached :images
   belongs_to :category
-  has_many :products_sails
-  has_many :sails, through: :products_sails
+  has_many :product_sales
+  has_many :sales, through: :product_sales
+
+  validates :name, presence: { message: "Ingrese un nombre." }, length: { maximum: 255, message: "El nombre es muy largo."  }
+  validates :description, presence: { message: "Ingrese una descripcion." }, length: { maximum: 255, message: "La descripcion es muy larga." }
+  validates :price, presence: { message: "Ingrese un precio." }, numericality: { greater_than_or_equal_to: 0, message: "El precio tiene que ser mayor a 0." }
+  validates :stock, presence: { message: "Ingrese el stock." }, numericality: { only_integer: true, greater_than_or_equal_to: 0, message: "El stock tiene que ser mayor a 0." }
+  validates :category, presence: { message: "Seleccione una categoria." }
 
   # Callback para manejar el stock
   before_update :set_stock_to_zero_if_deleted

@@ -38,6 +38,6 @@ class User < ApplicationRecord
     self.password = random_password
     self.password_confirmation = random_password
     self.skip_password_validation = true
-    self.save # Guardamos el usuario con la nueva contraseña
+    self.save
   end
 end
