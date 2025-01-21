@@ -25,17 +25,16 @@
     </div>
   <% end %>
 </div>
+
 <div class="product-grid">
   <% @products.each do |product| %>
     <div class="product-card" id="<%= dom_id(product) %>">
-      <% if product.images.attached? %>
-        <% product.images.each do |image| %>
-          <%= link_to home_show_path(product.id) do %>
-            <%= image_tag image.variant(resize_to_limit:[300, 300]) %>
-          <% end %>
+      <%= link_to home_show_path(product.id) do %>
+        <% if product.images.attached? %>
+          <%= image_tag product.images.first.variant(resize_to_limit:[300, 300]) %>
+        <% else %>
+          <p class="no-image">No hay imágenes.</p>
         <% end %>
-      <% else %>
-        No hay imágenes.
       <% end %>
       <div class="product-info">
         <h3 class="product-name"><%= product.name %></h3>

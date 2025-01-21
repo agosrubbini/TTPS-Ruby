@@ -3,7 +3,9 @@
   <!-- Imagen del producto -->
   <div class="product-image">
     <% if @product.images.attached? %>
-      <%= image_tag @product.images.first.variant(resize_to_limit: [600, 600]), class: "product-img" %>
+      <% @product.images.each do |image| %>
+        <%= image_tag @product.images.first.variant(resize_to_limit: [600, 600]), class: "product-img" %>
+      <% end %>
     <% else %>
       <p>No hay imágenes disponibles.</p>
     <% end %>

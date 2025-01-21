@@ -1,13 +1,20 @@
 class User < ApplicationRecord
+  # Módulos de Devise
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  # Gestión de roles
   rolify
+
+  # Asociaciones
   has_many :sails, foreign_key: "employee_id"
 
+  # Validaciones
   validates :name, presence: true, uniqueness: { message: "nombre no disponible" }
   validates :email, presence: true, uniqueness: { message: "no disponible" }
   validate :password_presence
 
+  # Métodos de instancia
   def add_role_mio(role_name)
     if Role.exists?(name: role_name)
       self.roles = []
@@ -22,6 +29,7 @@ class User < ApplicationRecord
   def soft_delete
     update_attribute(:active, false)
   end
+
 
   private
 

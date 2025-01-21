@@ -1,21 +1,15 @@
 puts("inicio")
 Role.find_or_create_by(name: 'admin')
-puts("role admin")
 
 Role.find_or_create_by(name: 'manager')
-puts("rol manager")
 
 Role.find_or_create_by(name: 'employee')
-puts("rol employee")
 
 Category.find_or_create_by(name: 'Remeras')
-puts("categoria remeras")
 
 Category.find_or_create_by(name: 'Buzos')
-puts("categoria buzos")
 
 Category.find_or_create_by(name: 'Pantalones')
-puts("categoria pantalones")
 
 def create_user_with_role(email, name, phone, password, active, role)
   user = User.find_or_initialize_by(email: email) do |u|
@@ -75,7 +69,6 @@ products.each do |attrs|
   attach_image(product, images_path)
 end
 
-puts("productos creados")
 
 require 'securerandom'
 
@@ -119,23 +112,19 @@ require 'securerandom'
       }
     end
   end
-  puts("holaaaaaaaaaaaaaa")
 
   # Crear los registros en ProductSales
   ProductSale.insert_all(product_sales_data)
-  puts("holaaaaaaaaaaaaaa")
 
   # Calcular el total_amount de la venta y actualizarla
   sale_total_amount = product_sales_data.sum { |entry| entry[:total_amount] }
   sale.update!(total_amount: sale_total_amount)
-  puts("holaaaaaaaaaaaaaa")
 
   # Reducir el stock de los productos vendidos
   product_sales_data.each do |entry|
     product = Product.find(entry[:product_id])
     product.update!(stock: product.stock - entry[:amount_sold])
   end
-  puts("holaaaaaaaaaaaaaa")
 
   puts "Venta #{i + 1} creada con ID #{sale.id} y total de $#{sale.total_amount}"
 end

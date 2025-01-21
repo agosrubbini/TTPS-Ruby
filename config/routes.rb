@@ -1,12 +1,16 @@
 Rails.application.routes.draw do
+  # Página principal
   root "home#index"
+
+  # Autenticación con Devise
   devise_for :users
 
+  # Namespace para administración
   namespace :admin do
+    # CRUD para categorías
     resources :categories
-  end
 
-  namespace :admin do
+    # CRUD para usuarios, con rutas personalizadas
     resources :users do
       member do
         patch :activate
@@ -18,30 +22,28 @@ Rails.application.routes.draw do
         patch :update_profile
       end
     end
-  end
 
-  namespace :admin do
+    # CRUD para productos, con rutas personalizadas
     resources :products do
       member do
         patch :activate
+        delete "delete_image/:image_id", to: "products#delete_image", as: "delete_image"
       end
     end
-  end
 
-  namespace :admin do
+    # CRUD para ventas, con rutas personalizadas
     resources :sales do
       post "add_product", on: :collection
     end
   end
 
+  # Detalle del home
   get "home/show/:id", to: "home#show", as: "home_show"
+
+  get "admin/sales/new", to: "sales#new", as: "new_sales"
+
+  # Creacionde un producto
   get "admin/products/new/", to: "products#new", as: "new_products"
-  get "admin/product/edit/:id", to: "products#edit", as: "edit_products"
-  get "admin/sales/new/", to: "sales#new", as: "new_sales"
-  get "admin/user/new/", to: "users#new", as: "new_users"
-  get "admin/user/edit/:id", to: "users#edit", as: "edit_users"
-  get "admin/user/profile", to: "user#profile"
-  patch "admin/user/update", to: "users#update_profile"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -53,5 +55,4 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  # root "posts#index"
 end

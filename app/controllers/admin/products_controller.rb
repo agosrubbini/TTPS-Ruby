@@ -19,7 +19,6 @@ class Admin::ProductsController < ApplicationController
     end
   end
 
-  # GET /products/new
   def new
     @product = Product.new
   end
@@ -34,6 +33,7 @@ class Admin::ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
+        process_images
         format.html { redirect_to admin_product_path(@product), notice: "Product was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -41,16 +41,25 @@ class Admin::ProductsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /products/1 or /products/1.json
+
   def update
     respond_to do |format|
-      if @product.update(product_params)
-        format.html { redirect_to admin_product_path(@product), notice: "Product was successfully updated." }
+      # Procesar imágenes para eliminación
+      process_images if params[:product][:remove_images].present?
+
+      # Actualizar el producto
+      if @product.update(product_params.except(:images, :remove_images))
+        # Adjuntar nuevas imágenes si hay
+        @product.images.attach(product_params[:images]) if product_params[:images].present?
+
+        format.html { redirect_to admin_product_path(@product), notice: "Producto actualizado con éxito." }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
     end
   end
+
+
 
   # DELETE /products/1 or /products/1.json
   def destroy
@@ -71,5 +80,24 @@ class Admin::ProductsController < ApplicationController
 
     def product_params
       params.require(:product).permit(:name, :description, :price, :stock, :color, :size, :category_id, :entry_date, :deleted_at, images: [])
+    end
+
+    def process_images
+      if params[:product][:remove_images].present?
+        params[:product][:remove_images].each do |signed_id|
+          # Encuentra la imagen a través de signed_id
+          attachment = @product.images.find_by(id: signed_id)
+
+          if attachment
+            attachment.purge
+          end
+        end
+      end
+
+      # Limitar a 3 imágenes, eliminando las extra
+      if @product.images.count > 3
+        excess_images = @product.images[3..-1] # Obtener imágenes extra
+        excess_images.each(&:purge)
+      end
     end
 end

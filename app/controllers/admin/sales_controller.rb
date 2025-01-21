@@ -17,11 +17,7 @@ class Admin::SalesController < ApplicationController
 
   def destroy
     @sale = Sale.find(params[:id])
-    @sale.product_sales.each do |product_sale|
-      product = Product.find(product_sale.product_id)
-      product.update(stock: product.stock + product_sale.amount_sold)
-    end
-    if @sale.update(is_deleted: true)  # Marca la venta como cancelada
+    if @sale.cancel_sale
       flash[:notice] = "Venta cancelada exitosamente."
     else
       flash[:alert] = "No se pudo cancelar la venta."
@@ -33,8 +29,8 @@ class Admin::SalesController < ApplicationController
     cart = load_cart
     product_id = params[:product_id].to_i
     amount = params[:amount].to_i
-
     product = Product.find(product_id)
+
     if amount > product.stock
       flash[:alert] = "No puedes agregar más del stock disponible."
     else
@@ -42,32 +38,14 @@ class Admin::SalesController < ApplicationController
       save_cart(cart)
       flash[:notice] = "Producto agregado al carrito."
     end
-
     redirect_to new_admin_sale_path
   end
 
   def create
     cart = load_cart
     @sale = Sale.new(sale_params)
-    @sale.total_amount = calculate_total(cart)
 
-    if @sale.save
-      cart.each do |product_id, amount|
-        product = Product.find(product_id)
-        total_price = product.price * amount
-
-        # Crear la relación en ProductSail
-        ProductsSale.create!(
-          sale: @sale,
-          product: product,
-          amount_sold: amount,
-          total_amount: total_price
-        )
-
-        # Actualizar el stock del producto
-        product.update!(stock: product.stock - amount)
-      end
-
+    if @sale.create_sale_and_update_stock(cart)
       clear_cart
       redirect_to admin_sale_path(@sale), notice: "Venta creada exitosamente."
     else
@@ -92,13 +70,6 @@ class Admin::SalesController < ApplicationController
 
   def clear_cart
     session[:cart] = {}
-  end
-
-  def calculate_total(cart)
-    cart.sum do |product_id, amount|
-      product = Product.find(product_id)
-      product.price * amount
-    end
   end
 
   def sale_params
