@@ -7,7 +7,7 @@ class User < ApplicationRecord
   rolify
 
   # Asociaciones
-  has_many :sails, foreign_key: "employee_id"
+  has_many :sales, foreign_key: "user_id"
 
   # Validaciones
   validates :name, presence: true, uniqueness: { message: "nombre no disponible" }
