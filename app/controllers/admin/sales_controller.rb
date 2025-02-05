@@ -1,5 +1,6 @@
 class Admin::SalesController < ApplicationController
   before_action :load_products, only: [ :new, :add_product, :index ]
+  load_and_authorize_resource
 
   def new
     @sale = Sale.new
